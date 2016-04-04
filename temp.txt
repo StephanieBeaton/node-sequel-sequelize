@@ -1,0 +1,68 @@
+
+
+//  precursor
+//  http://mherman.org/blog/2015/02/12/postgresql-and-nodejs/#.VtiXH5MrLUo
+
+// http://mherman.org/blog/2015/10/22/node-postgres-sequelize/#.VtiW1JMrLUo
+
+$ npm install --save mysql
+instead of
+$ npm install --save pg pg-hstore
+
+
+// https://github.com/mjhea0/node-postgres-sequelize
+
+// create migration for creating a new Todo table
+node_modules/.bin/sequelize model:create --name Todo --attributes "title:string, complete:boolean,UserId:integer"
+
+// create the postgres database
+createdb todos2
+
+// Run the migration to create the tables:
+node_modules/.bin/sequelize db:migrate
+
+
+// CHANGE THE database TYPE from postgres to myslq
+//            port
+config.json
+// {
+//      "development": {
+//        "username": "root",
+//        "password": "",
+//        "database": "todos2",
+//        "host": "127.0.0.1",
+//        "port": "3306",
+//        "dialect": "mysql"
+//      },
+//   "test": {
+//     "username": "root",
+//     "password": null,
+//     "database": "database_test",
+//     "host": "127.0.0.1",
+//     "dialect": "mysql"
+//   },
+//   "production": {
+//     "username": "root",
+//     "password": null,
+//     "database": "database_production",
+//     "host": "127.0.0.1",
+//     "dialect": "mysql"
+//   }
+// }
+
+// run the server
+gulp
+
+
+// create a new user
+curl --data "email=michael@mherman.org" http://127.0.0.1:3000/users
+
+
+curl --data "title=test&user_id=1" http://127.0.0.1:3000/todos
+curl --data "title=test2&user_id=1" http://127.0.0.1:3000/todos
+
+// update todo with id=2 to complete = true
+curl -X PUT --data "complete=true" http://127.0.0.1:3000/todo/2
+
+// delete a todo
+curl -X DELETE http://127.0.0.1:3000/todo/1
